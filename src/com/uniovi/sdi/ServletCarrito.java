@@ -40,11 +40,15 @@ public class ServletCarrito extends HttpServlet {
 		carrito = new HashMap<String,Integer>();
 		 request.getSession().setAttribute("carrito", carrito);
 		}
+		
 		String producto = request.getParameter("producto");
 		if ( producto != null){
 		insertarEnCarrito(carrito, producto);
 		}
-		response.setCharacterEncoding("UTF-8");
+		// Retornar la vista con parámetro "carrito"  
+		request.setAttribute("paresCarrito", carrito);  
+		getServletContext().getRequestDispatcher("/vista-carrito.jsp").forward(request, response);
+		/*response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<HTML>");
@@ -52,7 +56,7 @@ public class ServletCarrito extends HttpServlet {
 		out.println("<BODY>");
 		out.println(carritoEnHTML(carrito)+"<br>");
 		out.println("<a href=\"index.jsp\">Volver</a></BODY></HTML>");
-	}
+	*/}
 	
 	private void insertarEnCarrito(Map<String,Integer> carrito, String claveProducto) {
 		if (carrito.get(claveProducto)==null)
